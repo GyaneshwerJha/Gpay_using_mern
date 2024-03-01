@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { firstNameState, lastNameState } from "../states";
 import { useRecoilState } from "recoil";
 import Loader from "./Loader";

@@ -1,6 +1,6 @@
 # Paytm App
 
-Welcome to the Paytm App, a simple application for handling transactions and money transfers. This app provides basic functionality to send money, check balances, and manage user accounts.
+Welcome to the Gpay App, a simple application for handling transactions and money transfers. This app provides basic functionality to send money, check balances, and manage user accounts.
 
 ## Features
 
