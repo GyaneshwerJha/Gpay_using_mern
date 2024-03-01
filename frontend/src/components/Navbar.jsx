@@ -29,9 +29,9 @@ export default function Navbar() {
     <div className="flex items-center border-2px border-black h-20 justify-between shadow-md">
       <span>
         <h1 className="text-bold text-teal-500 inline text-2xl ml-4 mt-8 drop-shadow">
-          Paytm
+          G
         </h1>
-        <h1 className="inline text-bold text-2xl mt-8 drop-shadow">App</h1>
+        <h1 className="inline text-bold text-2xl mt-8 drop-shadow">Pay</h1>
       </span>
       {showLoader ? (
         <div className="h-full mr-5 flex items-center">
