@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const zod = require("zod");
 const JWT_SECRET = require("../config");
 const authMiddleware = require("../middleware");
+const bcrypt = require("bcrypt");
 
 const signupSchema = zod.object({
     username: zod.string(),
@@ -30,7 +31,7 @@ userRouter.get("/userInfo", authMiddleware, async (req, res) => {
 
     try {
         const user = await User.findOne({ _id: userId });
-        
+
         if (user) {
             res.json({
                 firstName: user.firstName,
@@ -46,17 +47,23 @@ userRouter.get("/userInfo", authMiddleware, async (req, res) => {
 });
 
 
-userRouter.post("/signup" ,async (req, res) => {
+userRouter.post("/signup", async (req, res) => {
     const body = req.body;
-    
+
     const { success } = signupSchema.safeParse(body);
     const dbCheck = await User.findOne({ username: body.username });
-    
+
     if (success && !dbCheck) {
-        const user = await User.create(body);
-        
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const user = await User.create({
+            username: req.body.username,
+            password: hashedPassword,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName
+        });
+
         const balance = Math.round((Math.random() * 10000) * 100);
-        await Account.create({userId: user._id, balance: balance});
+        await Account.create({ userId: user._id, balance: balance });
 
         const token = jwt.sign({ userId: user._id }, JWT_SECRET);
         res.json({ msg: "User created successfully", token: token });
@@ -74,10 +81,14 @@ userRouter.post("/signin", async (req, res) => {
         return;
     }
 
-    const check = await User.findOne({ username, password });
+    const check = await User.findOne({ username });
     if (check) {
-        const token = jwt.sign({ userId: check._id }, JWT_SECRET);
-        res.json({ token: token , msg: "Logged in successfully"});
+        const isMatch = await bcrypt.compare(req.body.password, check.password);
+        if (isMatch) {
+            const token = jwt.sign({ userId: check._id }, JWT_SECRET);
+            res.json({ token: token, msg: "Logged in successfully" });
+        }
+
     } else {
         res.status(411).json({ msg: "User not found" });
     }
@@ -91,7 +102,7 @@ userRouter.put("/", authMiddleware, async (req, res) => {
         return;
     }
 
-    const filter = { _id: req.userId }; 
+    const filter = { _id: req.userId };
     const update = { $set: data };
 
     try {
@@ -107,19 +118,19 @@ userRouter.put("/", authMiddleware, async (req, res) => {
     }
 });
 
-userRouter.get("/", authMiddleware, async(req, res) => {
+userRouter.get("/", authMiddleware, async (req, res) => {
     const filter = req.query.filter || "";
     const users = await User.find({
         $or: [{
-                firstName: {
-                    "$regex": filter
-                }
-            }, 
-            {
-                lastName: {
-                    "$regex": filter
-                }
-            }]
+            firstName: {
+                "$regex": filter
+            }
+        },
+        {
+            lastName: {
+                "$regex": filter
+            }
+        }]
     });
     const filterdUsers = users.map(user => {
         return {
@@ -129,7 +140,7 @@ userRouter.get("/", authMiddleware, async(req, res) => {
             lastName: user.lastName
         }
     })
-    res.json(filterdUsers); 
+    res.json(filterdUsers);
 })
 
 module.exports = userRouter;
