@@ -14,17 +14,20 @@ export default function SendMoneyModel() {
 
   async function handleTransaction() {
     setShowLoader(true);
-    const res = await fetch(`http://localhost:3000/api/v1/account/transfer`, {
-      method: "POST",
-      body: JSON.stringify({
-        to: transferToUser.username,
-        amount: Number(amount),
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await fetch(
+      `https://gpay-using-mern.vercel.app/api/v1/account/transfer`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          to: transferToUser.username,
+          amount: Number(amount),
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (!res.ok) {
       const data = await res.json();
       setShowLoader(false);
