@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { transferTo } from "../states";
 import { useSetRecoilState } from "recoil";
 
-export default function UserCard({index, fullName, id, username, firstName}) {
+export default function UserCard({index, fullName, id, username, firstName}){
 
     const setTransferToUser = useSetRecoilState(transferTo);
 

@@ -33,3 +33,5 @@ Welcome to the Paytm App, a simple application for handling transactions and mon
 - **JWT Authantication**
     - The Paytm App leverages Zod for input validation and JSON Web Tokens (JWT) for secure and efficient user authentication.
 
+## Getting Started
+
