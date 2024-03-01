@@ -34,7 +34,7 @@ export default function FindUsers() {
 
   async function handleSearch() {
     const res = await fetch(
-      `https://gpay-using-mern.vercel.app/api/v1/user/?filter=${filter}`,
+      `https://gpay-using-mern.onrender.com/api/v1/user/?filter=${filter}`,
       {
         method: "GET",
         headers: {

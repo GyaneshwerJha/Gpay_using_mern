@@ -15,7 +15,7 @@ export default function SendMoneyModel() {
   async function handleTransaction() {
     setShowLoader(true);
     const res = await fetch(
-      `https://gpay-using-mern.vercel.app/api/v1/account/transfer`,
+      `https://gpay-using-mern.onrender.com/api/v1/account/transfer`,
       {
         method: "POST",
         body: JSON.stringify({

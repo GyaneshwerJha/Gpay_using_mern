@@ -23,7 +23,7 @@ export default function Signup() {
     setShowLoader(true);
     try {
       const res = await fetch(
-        "https://gpay-using-mern.vercel.app/api/v1/user/signup",
+        "https://gpay-using-mern.onrender.com/api/v1/user/signup",
         {
           method: "POST",
           body: JSON.stringify({

@@ -10,7 +10,7 @@ export default function Navbar() {
 
   const token = localStorage.getItem("myToken");
   useEffect(() => {
-    fetch("https://gpay-using-mern.vercel.app/api/v1/user/userInfo", {
+    fetch("https://gpay-using-mern.onrender.com/api/v1/user/userInfo", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
