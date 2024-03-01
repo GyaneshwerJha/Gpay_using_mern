@@ -15,16 +15,19 @@ export default function Signin() {
     setShowLoader(true);
 
     try {
-      const res = await fetch("http://localhost:3000/api/v1/user/signin", {
-        method: "POST",
-        body: JSON.stringify({
-          username: username,
-          password: password,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await fetch(
+        "https://gpay-using-mern.vercel.app/api/v1/user/signin",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            username: username,
+            password: password,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!res.ok) {
         alert(`HTTP error! status ${res.status}`);
